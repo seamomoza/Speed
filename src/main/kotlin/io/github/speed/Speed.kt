@@ -1,5 +1,6 @@
 package io.github.speed
 
+import net.kyori.adventure.text.format.TextColor.color
 import org.bukkit.Bukkit
 import org.bukkit.ChatColor
 import org.bukkit.attribute.Attribute
@@ -61,7 +62,18 @@ class Speed : JavaPlugin(), Listener {
         object : BukkitRunnable() {
             override fun run() {
                 Bukkit.getOnlinePlayers().forEach { player ->
-                    player.sendActionBar("§2현재 tick: $currentTickSpeed")
+                    val color = when {
+                        currentTickSpeed < 50 -> ChatColor.GRAY
+                        currentTickSpeed < 100 -> ChatColor.AQUA
+                        currentTickSpeed < 150 -> ChatColor.GREEN
+                        currentTickSpeed < 175 -> ChatColor.YELLOW
+                        currentTickSpeed < 200 -> ChatColor.LIGHT_PURPLE
+                        currentTickSpeed < 400 -> ChatColor.DARK_PURPLE
+                        currentTickSpeed < 1000 -> ChatColor.RED
+
+                        else -> ChatColor.DARK_RED
+                    }
+                    player.sendActionBar("${color}${ChatColor.BOLD}현재 Tick: $currentTickSpeed")
                 }
             }
         }.runTaskTimer(this, 0L, 1L) // 1초마다 업데이트
