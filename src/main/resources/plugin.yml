@@ -1,0 +1,4 @@
+name: Speed
+version: '1.0-SNAPSHOT'
+main: io.github.speed.Speed
+api-version: '1.21'
